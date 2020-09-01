@@ -1,0 +1,109 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>{{ page_title }}</h1>
+<br>
+<br>
+<h3>Got a new bug or need a new function, please create a new ticket below:</h3>
+<a href="{% url 'addnewticket' %}">Add Ticket</a>
+<br>
+<h2>List of all of our current tickets:</h2>
+<br>
+<h2>NEW</h2>
+{% for ticket in tickets}
+<ul>
+    {% if ticket.status == "New" %}
+    <li>Ticket #{{ ticket.id }}</li>
+    <li>
+        <a href="{% url 'ticketdetails' ticket.id %}">{{ ticket.title }}</a>
+    </li>
+    {% if ticket.assigned_to == None %}
+    <li>None</li>
+    {% else %}
+    <li>
+        <a href="{% url 'userdetails' ticket.assigned_to %}">{{ ticket.assigned_to }}</a>
+    </li>
+    {% endif %}
+    <li>
+        <a href="{% url 'userdetails' ticket.completed_by %}">{{ ticket.completed_by }}</a>
+    </li>
+    <li>
+        <a href="{% url 'userdetails' ticket.created_by %}">{{ ticket.created_by }}</a>
+    </li>
+    <li>{{ ticket.date_time }}</li>
+</ul>
+{% endfor %}
+<br>
+<h2>IN PROGRESS</h2>
+{% for ticket in tickets %}
+<ul>
+    {% if ticket.status == "In Progress" %}
+    <li>Ticket #{{ ticket.id }}</li>
+    <li>
+        <a href="{% url 'ticketdetails' ticket.id %}">{{ ticket.title }}</a>
+    </li>
+    {% if ticket.assigned_to == None %}
+    <li>None</li>
+    {% else %}
+    <li>
+        <a href="{% url 'userdetails' ticket.assigned_to %}">{{ ticket.assigned_to }}</a>
+    </li>
+    {% endif %}
+    <li>
+        <a href="{% url 'userdetails' ticket.completed_by %}">{{ ticket.completed_by }}</a>
+    </li>
+    <li>
+        <a href="{% url 'userdetails' ticket.created_by %}">{{ ticket.created_by }}</a>
+    </li>
+    <li>{{ ticket.date_time }}</li>
+</ul>
+{% endfor %}
+<br>
+<h2>DONE</h2>
+{% for ticket in tickets %}
+<ul>
+    {% if ticket.status == "Done" %}
+    <li>Ticket #{{ ticket.id }}</li>
+    <li>
+        <a href="{% url 'ticketdetails' ticket.id %}">{{ ticket.title }}</a>
+    </li>
+    {% if ticket.assigned_to == None %}
+    <li>None</li>
+    {% else %}
+    <li>
+        <a href="{% url 'userdetails' ticket.assigned_to %}">{{ ticket.assigned_to }}</a>
+    </li>
+    {% endif %}
+    <li>
+        <a href="{% url 'userdetails' ticket.completed_by %}">{{ ticket.completed_by }}</a>
+    </li>
+    <li>
+        <a href="{% url 'userdetails' ticket.created_by %}">{{ ticket.created_by }}</a>
+    </li>
+    <li>{{ ticket.date_time }}</li>
+</ul>
+{% endfor %}
+<br>
+<h2>INVALID</h2>
+{% for ticket in tickets %}
+<ul>
+    {% if ticket.status == "Invalid" %}
+    <li>Ticket #{{ ticket.id }}</li>
+    <li>
+        <a href="{% url 'ticketdetails' ticket.id %}">{{ ticket.title }}</a>
+    </li>
+    {% if ticket.assigned_to == None %}
+    <li>Assigned to None</li>
+    {% else %}
+    <li>
+        <a href="{% url 'userdetails' ticket.assigned_to %}">{{ ticket.assigned_to }}</a>
+    </li>
+    {% endif %}
+    <li>
+        <a href="{% url 'userdetails' ticket.completed_by %}">{{ ticket.completed_by }}</a>
+    </li>
+    <li>
+        <a href="{% url 'userdetails' ticket.created_by %}">{{ ticket.created_by }}</a>
+    </li>
+    <li>{{ ticket.date_time }}</li>
+</ul>
+{% endfor %} {% endblock %}

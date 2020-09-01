@@ -1,0 +1,70 @@
+{% extends "base.html" %} {% block content %}
+
+<h1>{{ page_title }}</h1>
+<br>
+<nav>
+    <a href="{% url 'homepage' %}">HOME</a>
+    <a href="{% url 'addnewticket' %}">ADD NEW TICKET</a>
+    <a href="{% url 'ticketdetails' %}">TICKET DETAILS</a>
+</nav>
+<br>
+<br> {% if not user %}
+<h3>Unknown user, please check again</h3>
+{% else %}
+<h2>These are the tickets contributed by {{ request.user }}:</h2>
+{% for ticket in user_tickets %} {% if ticket.status == "New" %}
+<h3>NEW</h3>
+<ul>
+    <li>Ticket #{{ ticket.id }}</li>
+    <li>{{ ticket.title }}</li>
+    <li>{{ ticket.assigned_to }}</li>
+    <li>
+        <a href="{% url 'userdetails' ticket.created_by %}">{{ ticket.created_by }}</a>
+    </li>
+    <li>{{ ticket.date_time }}</li>
+    {% endif %}
+</ul>
+{% endfor %}
+<br> {% for ticket in user_tickets %} {% if ticket.status == "In Progress" %}
+<h3>IN PROGRESS</h3>
+<ul>
+    <li>Ticket #{{ ticket.id }}</li>
+    <li>{{ ticket.title }}</li>
+    <li>{{ ticket.assigned_to }}</li>
+    <li>
+        <a href="{% url 'userdetails' ticket.created_by %}">{{ ticket.created_by }}</a>
+    </li>
+    <li>{{ ticket.date_time }}</li>
+    {% endif %}
+</ul>
+{% endfor %}
+<br> {% for ticket in user_tickets %} {% if ticket.status == "Done" %}
+<h3>DONE</h3>
+<ul>
+    <li>Ticket #{{ ticket.id }}</li>
+    <li>{{ ticket.title }}</li>
+    <li>{{ ticket.assigned_to }}</li>
+    <li>
+        <a href="{% url 'userdetails' ticket.created_by %}">{{ ticket.created_by }}</a>
+    </li>
+    <li>{{ ticket.date_time }}</li>
+    {% endif %}
+</ul>
+{% endfor %}
+<br> {% for ticket in user_tickets %} {% if ticket.status == "Invalid" %}
+<h3>INVALID</h3>
+<ul>
+    <li>Ticket #{{ ticket.id }}</li>
+    <li>{{ ticket.title }}</li>
+    <li>{{ ticket.assigned_to }}</li>
+    <li>
+        <a href="{% url 'userdetails' ticket.created_by %}">{{ ticket.created_by }}</a>
+    </li>
+    <li>{{ ticket.date_time }}</li>
+    {% endif %}
+</ul>
+{% endfor %}
+<br>
+<br>
+<h3>Have to do something else? Please logout first and return soon:</h3>
+<a href="{% url 'logout' %}">Logout</a> {% endblock %}

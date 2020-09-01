@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>{{ page_title }}</h1>
+<br>
+<nav>
+    <a href="{% url 'homepage' %}">HOME</a>
+    <a href="{% url 'addnewticket' %}">ADD NEW TICKET</a>
+    <a href="{% url 'userdetails' %}">USER DETAILS</a>
+</nav>
+<br>
+<br>
+<ul>
+    <li>Ticket #{{ ticket.id }}</li>
+    <li>Ticket Status: {{ ticket.status }}</li>
+    <li>Ticket Title: {{ ticket.title }}</li>
+    <li>Ticket Description: {{ ticket.description }}</li>
+    <li>Ticket Date & Time: {{ ticket.date_time }}</li>
+</ul>
+<br>
+<ul>
+    {% if ticket.status == "New" %}
+    <li>Created by: {{ ticket.created_by }}</li>
+    {% endif %}
+</ul>
+<br>
+<ul>
+    {% if ticket.status == "In Progress" %}
+    <li>Assigned to: {{ ticket.assigned_to }}</li>
+    {% endif %}
+</ul>
+<br>
+<ul>
+    {% if ticket.status == "Done" %}
+    <li>Completed by: {{ ticket.completed_by }}</li>
+    {% endif %}
+</ul>
+<br>
+<ul>
+    {% if ticket.status == "Invalid" %}
+    <li>Invalid Ticket</li>
+    {% endif %}
+</ul>
+<br>
+<nav>
+    <a href="{% url 'editticket' ticket.id %}">EDIT TICKET</a>
+    <a href="{% url 'assignticket' ticket.id %}">ASSIGN TICKET</a>
+    <a href="{% url 'ticketdone' ticket.id %}">TICKET DONE</a>
+    <a href="{% url 'invalidticket' ticket.id %}">INVALID TICKET</a>
+</nav>
+<br>
+<br>
+<h3>Have to do something else? Please logout first and return soon:</h3>
+<a href="{% url 'logout' %}">Logout</a> {% endblock %}
